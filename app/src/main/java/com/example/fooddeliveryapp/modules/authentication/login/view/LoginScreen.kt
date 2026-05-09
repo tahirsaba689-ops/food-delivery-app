@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.fooddeliveryapp.R
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onSignUpClick: () -> Unit) { // Ye parameter add karein{
 
     var email by remember { mutableStateOf("email") }
     var password by remember { mutableStateOf("password") }
@@ -171,7 +171,7 @@ fun LoginScreen() {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Sign Up
-                TextButton(onClick = { }) {
+                TextButton(onClick = {onSignUpClick() }) {
                     Text(
                         text = "New user? Sign up",
                         color = Color.Black
@@ -185,5 +185,5 @@ fun LoginScreen() {
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(onSignUpClick = { })
 }

@@ -14,29 +14,29 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.fooddeliveryapp.R
 
 @Composable
-fun WelcomeScreen() {
-    // Figma jesa Light Orange aur White ka Gradient background
+fun WelcomeScreen(
+    onLoginClick: () -> Unit,
+    onSignupClick: () -> Unit
+) {
     val gradientBackground = Brush.verticalGradient(
-        colors = listOf(
-            Color(0xFFFFE082), // Light Orange top
-            Color(0xFFF5F5F5)  // Near-white bottom
-        )
+        colors = listOf(Color(0xFFFFE082), Color(0xFFF5F5F5))
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(gradientBackground)
+            .background(brush = gradientBackground)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(all = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -51,9 +51,8 @@ fun WelcomeScreen() {
                 modifier = Modifier.padding(top = 40.dp)
             )
 
-            // 2. Center Image (Delivery Boy)
+            // 2. Image
             Image(
-                // Extension (.jpg ya .png) likhne ki zaroorat nahi hoti
                 painter = painterResource(id = R.drawable.delivery_boy),
                 contentDescription = "Delivery Boy",
                 modifier = Modifier
@@ -68,24 +67,30 @@ fun WelcomeScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                WelcomeButton(text = "Log In")
-                WelcomeButton(text = "Sign Up")
+                WelcomeButton(
+                    text = "Log In",
+                    onButtonClick = { onLoginClick() }
+                )
+                WelcomeButton(
+                    text = "Sign Up",
+                    onButtonClick = { onSignupClick() }
+                )
             }
         }
     }
 }
 
 @Composable
-fun WelcomeButton(text: String) {
+fun WelcomeButton(text: String, onButtonClick: () -> Unit) {
     Button(
-        onClick = { /* Navigation yahan add karen */ },
+        onClick = { onButtonClick() },
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFFFB800) // Figma Orange Color
+            containerColor = Color(0xFFFFB800)
         ),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(size = 12.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -98,7 +103,6 @@ fun WelcomeButton(text: String) {
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
-            // Arrow Icon jesa Figma mein hai
             Text(
                 text = "→",
                 color = Color.Black,
@@ -107,4 +111,13 @@ fun WelcomeButton(text: String) {
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WelcomeScreenPreview() {
+    WelcomeScreen(
+        onLoginClick = { },
+        onSignupClick = { }
+    )
 }

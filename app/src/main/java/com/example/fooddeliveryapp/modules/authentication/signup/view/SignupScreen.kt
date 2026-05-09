@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.example.fooddeliveryapp.R // Apna package name check kar lein
 
 @Composable
-fun SignupScreen() {
+fun SignupScreen(onLoginClick: () -> Unit) { // Ye bracket ke andar wala hissa add karein {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -108,16 +108,17 @@ fun SignupScreen() {
                     Text("Sign up with Google", fontSize = 14.sp)
                 }
 
-                TextButton(
-                    onClick = { /* Navigate to Login */ },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                ) {
-                    Text("already register? Log in", color = Color.Black, fontSize = 12.sp)
+                // Jahan "Log in" wala option hai:
+                TextButton(onClick = { onLoginClick() }) { // Ye call karega Login screen ko
+                    Text(
+                        text = "already register? Log in",
+                        color = Color.Black
+                    )
+                }
                 }
             }
         }
     }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
