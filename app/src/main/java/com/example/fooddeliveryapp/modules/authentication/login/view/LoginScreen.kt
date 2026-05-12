@@ -24,9 +24,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.fooddeliveryapp.R
+import com.example.fooddeliveryapp.ui.theme.FoodDeliveryAppTheme
 
 @Composable
-fun LoginScreen(onSignUpClick: () -> Unit) { // Ye parameter add karein{
+// Is tarah update karein:
+fun LoginScreen(
+    onSignUpClick: () -> Unit,
+    onForgetPasswordClick: () -> Unit // Ye naya parameter add karein
+) {
+    // ... baaki code{ // Ye parameter add karein{
 
     var email by remember { mutableStateOf("email") }
     var password by remember { mutableStateOf("password") }
@@ -138,7 +144,7 @@ fun LoginScreen(onSignUpClick: () -> Unit) { // Ye parameter add karein{
 
                 // Forgot Password
                 TextButton(
-                    onClick = { },
+                    onClick = {onForgetPasswordClick() },
                     modifier = Modifier.align(Alignment.End)
                 ) {
                     Text(
@@ -181,9 +187,13 @@ fun LoginScreen(onSignUpClick: () -> Unit) { // Ye parameter add karein{
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(onSignUpClick = { })
+    FoodDeliveryAppTheme {
+        LoginScreen(
+            onSignUpClick = { },
+            onForgetPasswordClick = { } // Yeh empty action add karein
+        )
+    }
 }
