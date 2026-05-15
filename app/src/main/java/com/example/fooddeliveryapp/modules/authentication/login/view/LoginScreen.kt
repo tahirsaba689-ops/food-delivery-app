@@ -27,15 +27,14 @@ import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.ui.theme.FoodDeliveryAppTheme
 
 @Composable
-// Is tarah update karein:
 fun LoginScreen(
     onSignUpClick: () -> Unit,
-    onForgetPasswordClick: () -> Unit // Ye naya parameter add karein
-) {
-    // ... baaki code{ // Ye parameter add karein{
+    onForgetPasswordClick: () -> Unit, // Comma add kiya
+    onLoginSuccess: () -> Unit
 
-    var email by remember { mutableStateOf("email") }
-    var password by remember { mutableStateOf("password") }
+) {
+    var email by remember { mutableStateOf("") } // "email" ki jagah empty string rakho
+    var password by remember { mutableStateOf("") } // "password" ki jagah empty string
     var passwordVisible by remember { mutableStateOf(false) }
 
     Box(
@@ -47,16 +46,12 @@ fun LoginScreen(
                 )
             )
     ) {
-
         // Top Images
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(420.dp)
         ) {
-            // Using Icons as placeholders since specific drawables are missing in res/drawable
-
-// Doosri Image (Delivery Boy)
             Image(
                 painter = painterResource(id = R.drawable.delivery_boy),
                 contentDescription = "Delivery Boy",
@@ -71,7 +66,7 @@ fun LoginScreen(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal= 24.dp)
+                .padding(horizontal = 24.dp)
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 90.dp),
             shape = RoundedCornerShape(32.dp),
@@ -79,12 +74,10 @@ fun LoginScreen(
                 containerColor = Color(0xFFFFE5B4).copy(alpha = 0.95f)
             )
         ) {
-
             Column(
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Text(
                     text = "Log In",
                     fontSize = 24.sp,
@@ -144,7 +137,7 @@ fun LoginScreen(
 
                 // Forgot Password
                 TextButton(
-                    onClick = {onForgetPasswordClick() },
+                    onClick = { onForgetPasswordClick() },
                     modifier = Modifier.align(Alignment.End)
                 ) {
                     Text(
@@ -158,7 +151,7 @@ fun LoginScreen(
 
                 // Login Button
                 Button(
-                    onClick = { },
+                    onClick = { onLoginSuccess()  },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
@@ -177,7 +170,7 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Sign Up
-                TextButton(onClick = {onSignUpClick() }) {
+                TextButton(onClick = { onSignUpClick() }) {
                     Text(
                         text = "New user? Sign up",
                         color = Color.Black
@@ -187,13 +180,15 @@ fun LoginScreen(
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
     FoodDeliveryAppTheme {
         LoginScreen(
             onSignUpClick = { },
-            onForgetPasswordClick = { } // Yeh empty action add karein
+            onForgetPasswordClick = { },
+            onLoginSuccess ={ }
         )
     }
 }

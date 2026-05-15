@@ -18,7 +18,11 @@ import androidx.compose.ui.unit.sp
 import com.example.fooddeliveryapp.R // Apna package name check kar lein
 
 @Composable
-fun SignupScreen(onLoginClick: () -> Unit) { // Ye bracket ke andar wala hissa add karein {
+fun SignupScreen (
+            onLoginClick: () -> Unit,
+             onSignupSuccess: () -> Unit
+)
+{ // Ye bracket ke andar wala hissa add karein {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -83,7 +87,7 @@ fun SignupScreen(onLoginClick: () -> Unit) { // Ye bracket ke andar wala hissa a
 
                 // Create Account Button
                 Button(
-                    onClick = { /* Handle Signup */ },
+                    onClick = { onSignupSuccess() },
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500)),
                     shape = RoundedCornerShape(12.dp)
@@ -115,10 +119,10 @@ fun SignupScreen(onLoginClick: () -> Unit) { // Ye bracket ke andar wala hissa a
                         color = Color.Black
                     )
                 }
-                }
             }
         }
     }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

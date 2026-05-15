@@ -21,7 +21,8 @@ import com.example.fooddeliveryapp.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResetPasswordScreen(
-    viewModel: ResetPasswordViewModel = viewModel()
+    viewModel: ResetPasswordViewModel = viewModel(),
+    onResetSuccess: () -> Unit
 ) {
     val newPassword by viewModel.newPassword
     val confirmPassword by viewModel.confirmPassword
@@ -95,7 +96,8 @@ fun ResetPasswordScreen(
 
                     // Continue Button
                     Button(
-                        onClick = { viewModel.updatePassword() },
+                        onClick = { viewModel.updatePassword()
+                            onResetSuccess() },
                         modifier = Modifier.fillMaxWidth().height(55.dp),
                         shape = ComponentShape,
                         colors = ButtonDefaults.buttonColors(containerColor = PrimaryButtonColor)

@@ -17,20 +17,21 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.fooddeliveryapp.modules.authentication.forget.view.ForgetPasswordScreen
 import com.example.fooddeliveryapp.modules.authentication.reset.view.ResetPasswordScreen
+import com.example.fooddeliveryapp.modules.home.menu.view.MenuScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-            // Line 21 ko aise badlein:
-            setContent {
-                FoodDeliveryAppTheme {
-                    AppNavigation()
-                }
+        // Line 21 ko aise badlein:
+        setContent {
+            FoodDeliveryAppTheme {
+                AppNavigation()
             }
+        }
 
-                }
-            }
+    }
+}
 
 
 @Composable
@@ -65,14 +66,30 @@ fun AppNavigation() {
         composable(route = "login") {
             LoginScreen(
                 onSignUpClick = { navController.navigate("signup") },
-                // Yahan Forget Password ka click handle karein
-                onForgetPasswordClick = { navController.navigate("forget") }
+                onForgetPasswordClick = { navController.navigate("forget") },
+                // Yeh line add karein:
+                onLoginSuccess = {
+                    navController.navigate("menu") {
+                        popUpTo("welcome") {
+                            inclusive = true
+                        } // Login ke baad piche welcome par na jaye
+                    }
+                }
             )
         }
 
         composable(route = "signup") {
             SignupScreen(
-                onLoginClick = { navController.navigate("login") }
+                onLoginClick = {
+                    navController.navigate("login")
+                },
+                onSignupSuccess = {
+                    // Account banne ke baad seedha Menu par bhejein
+                    navController.navigate("menu") {
+                        // Taake back button dabane par wapas signup form na aaye
+                        popUpTo("welcome") { inclusive = true }
+                    }
+                }
             )
         }
 
@@ -85,8 +102,18 @@ fun AppNavigation() {
 
         // YAHAN LIKHEIN (Line 82 par purana code delete karke ye naya likhein)
         composable(route = "reset_password") {
-            ResetPasswordScreen()
+            ResetPasswordScreen(
+                onResetSuccess = {
+                    navController.navigate("menu") {
+                        // Poore pichle stack ko clear kar dein taake user wapas reset page par na ja sakay
+                        popUpTo("welcome") { inclusive = true }
+                    }
+                }
+            )
         }
+        composable(route = "menu") {
+            MenuScreen()
 
-            }
         }
+    }
+}
